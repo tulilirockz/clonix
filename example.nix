@@ -29,11 +29,11 @@
       remote.user.keyfile = /path/to/abspath;
     }
     {
-      timerName = "sussy";
+      deploymentName = "sussy";
       localDir = /path/to/abspath;
-      remoteDir = /path/to/abspath;
-      remoteUser.name = "momoga";
-      remoteUser.keyfile = /path/to/abspath;
+      targetDir = /path/to/abspath;
+      remote.user.name = "momoga";
+      remote.user.keyfile = /path/to/abspath;
       onCalendar = "Mon,Tue *-*-01..04 12:00:00";
       retry.enable = true;
       retry.times = "12";

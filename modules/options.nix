@@ -65,16 +65,8 @@
                       default = null;
                       description = "Target password for the remote";
                     };
-                    sshpass = lib.mkOption {
-                      default = {package = pkgs.sshpass;};
-                      type = lib.types.submodule (_: {
-                        options.package = lib.mkOption {
-                          type = lib.types.package;
-                          default = pkgs.sshpass;
-                          description = "sshpass package that will be used for authentication";
-                        };
-                      });
-                    };
+                    
+		    # TODO: Implement ssh keyfile password
                     keyfile = lib.mkOption {
                       type = lib.types.nullOr lib.types.path;
                       default = null;
@@ -104,9 +96,30 @@ in {
       [{ deploymentName = "amogus"; local.dir = /path/to/abspath; targetDir = /path/to/abspath; remote.enable = true; remote.user = "root"; remote.ipOrHostname = "192.168.1.1"}]
     '';
   };
-  rsyncPackage = lib.mkOption {
-    type = lib.types.package;
-    default = pkgs.rsync;
-    description = "The rsync package you want to use";
+  packages = lib.mkOption {
+    default = {
+      sshpass = pkgs.sshpass;
+      openssh = pkgs.openssh;
+      rsync = pkgs.rsync;
+    };
+    type = lib.types.submodule(_:{
+      options = {
+	rsync = lib.mkOption {
+  	  type = lib.types.package;
+  	  default = pkgs.rsync;
+  	  description = "Rsync package to be used";
+  	};
+  	sshpass = lib.mkOption {
+	  type = lib.types.package;
+	  default = pkgs.sshpass;
+  	  description = "Sshpass package to be used";
+  	};
+	openssh = lib.mkOption {
+	  type = lib.types.package;
+	  default = pkgs.openssh;
+  	  description = "Openssh package to be used";
+	};
+      };
+    });
   };
 }
