@@ -26,15 +26,18 @@
               if deployment.remote.user.keyfile != null
               then "-e \"${cfg.packages.openssh}/bin/ssh -i ${deployment.remote.user.keyfile}\" " + ''\''
               else ""
-            ) 
+            )
           )
         else ""
       }
+      ${
+        "--exclude={" + (lib.concatStringsSep "," deployment.local.exclude) + "} \\"
+      }
       ${deployment.local.dir}/* \
       ${
-	if deployment.remote.enable == true then
-	  ''${deployment.remote.user.name}@${deployment.remote.ipOrHostname}:${deployment.targetDir}''
-	else "${deployment.targetDir}"
+        if deployment.remote.enable == true
+        then ''${deployment.remote.user.name}@${deployment.remote.ipOrHostname}:${deployment.targetDir}''
+        else "${deployment.targetDir}"
       }
     ''
   );

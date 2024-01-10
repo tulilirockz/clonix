@@ -24,12 +24,24 @@
   };
   generateTimer = deployment: {
     "clonix@${generateDeploymentHash deployment}" = {
-      wantedBy = [ "timers.target" ];
+      wantedBy = ["timers.target"];
       timerConfig = {
-        OnBootSec = "${if (deployment.timer.onBootSec != null) then deployment.timer.onBootSec else ""}";
-	OnUnitActiveSec = "${if (deployment.timer.onUnitActiveSec != null) then deployment.timer.onUnitActiveSec else ""}";
-	OnCalendar = "${if (deployment.timer.onCalendar != null) then deployment.timer.onCalendar else ""}"; 
-	Unit = "clonix@${generateDeploymentHash deployment}.service";
+        OnBootSec = "${
+          if (deployment.timer.onBootSec != null)
+          then deployment.timer.onBootSec
+          else ""
+        }";
+        OnUnitActiveSec = "${
+          if (deployment.timer.onUnitActiveSec != null)
+          then deployment.timer.onUnitActiveSec
+          else ""
+        }";
+        OnCalendar = "${
+          if (deployment.timer.onCalendar != null)
+          then deployment.timer.onCalendar
+          else ""
+        }";
+        Unit = "clonix@${generateDeploymentHash deployment}.service";
       };
     };
   };

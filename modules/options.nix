@@ -23,6 +23,11 @@
               default = null;
               description = "User that will run the rsync command";
             };
+            exclude = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = ["/example/path" "/path/to/abspath"];
+              description = "Paths to exclude";
+            };
           };
         });
       };
@@ -37,26 +42,26 @@
         description = "Extra CLI options for rsync";
       };
       timer = lib.mkOption {
-	default = { };
-	type = lib.types.submodule (_:{
-	  options = {
-	    onCalendar = lib.mkOption {
-	      type = lib.types.nullOr lib.types.str;
-	      default = "12:00";
-	      description = "OnCalendar following systemd definitions";
-	    };
-	    onBootSec = lib.mkOption {
-	      type = lib.types.nullOr lib.types.str;
-	      default = null;
-	      description = "OnBootSec following systemd definitions";
-	    };
-	    onUnitActiveSec = lib.mkOption {
-	      type = lib.types.nullOr lib.types.str;
-	      default = null;
-	      description = "OnUnitActiveSec following systemd definitions";
-	    };
-	  };
-	});
+        default = {};
+        type = lib.types.submodule (_: {
+          options = {
+            onCalendar = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = "12:00";
+              description = "OnCalendar following systemd definitions";
+            };
+            onBootSec = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+              description = "OnBootSec following systemd definitions";
+            };
+            onUnitActiveSec = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+              description = "OnUnitActiveSec following systemd definitions";
+            };
+          };
+        });
       };
       remote = lib.mkOption {
         default = {enable = false;};
@@ -67,7 +72,7 @@
                 type = lib.types.bool;
                 default = false;
                 description = "Whether or not rsync will be manage remotes";
-             };
+              };
               ipOrHostname = lib.mkOption {
                 type = lib.types.nullOr lib.types.str;
                 default = null;
@@ -87,8 +92,8 @@
                       default = null;
                       description = "Target password for the remote";
                     };
-                    
-		    # TODO: Implement ssh keyfile password
+
+                    # TODO: Implement ssh keyfile password
                     keyfile = lib.mkOption {
                       type = lib.types.nullOr lib.types.path;
                       default = null;
@@ -124,23 +129,23 @@ in {
       openssh = pkgs.openssh;
       rsync = pkgs.rsync;
     };
-    type = lib.types.submodule(_:{
+    type = lib.types.submodule (_: {
       options = {
-	rsync = lib.mkOption {
-  	  type = lib.types.package;
-  	  default = pkgs.rsync;
-  	  description = "Rsync package to be used";
-  	};
-  	sshpass = lib.mkOption {
-	  type = lib.types.package;
-	  default = pkgs.sshpass;
-  	  description = "Sshpass package to be used";
-  	};
-	openssh = lib.mkOption {
-	  type = lib.types.package;
-	  default = pkgs.openssh;
-  	  description = "Openssh package to be used";
-	};
+        rsync = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.rsync;
+          description = "Rsync package to be used";
+        };
+        sshpass = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.sshpass;
+          description = "Sshpass package to be used";
+        };
+        openssh = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.openssh;
+          description = "Openssh package to be used";
+        };
       };
     });
   };
