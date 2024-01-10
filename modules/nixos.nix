@@ -22,10 +22,22 @@
       };
     };
   };
+  generateTimer = deployment: {
+    "clonix@${generateDeploymentHash deployment}" = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "${if (deployment.timer.onBootSec != null) then deployment.timer.onBootSec else ""}";
+	OnUnitActiveSec = "${if (deployment.timer.onUnitActiveSec != null) then deployment.timer.onUnitActiveSec else ""}";
+	OnCalendar = "${if (deployment.timer.onCalendar != null) then deployment.timer.onCalendar else ""}"; 
+	Unit = "clonix@${generateDeploymentHash deployment}.service";
+      };
+    };
+  };
 in {
   options.services.clonix = import ./options.nix {inherit lib pkgs;};
 
   config = lib.mkIf cfg.enable {
     systemd.services = lib.mkMerge (lib.lists.flatten (builtins.map generateService cfg.deployments));
+    systemd.timers = lib.mkMerge (lib.lists.flatten (builtins.map generateTimer cfg.deployments));
   };
 }

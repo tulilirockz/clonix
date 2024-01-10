@@ -36,6 +36,28 @@
         default = null;
         description = "Extra CLI options for rsync";
       };
+      timer = lib.mkOption {
+	default = { };
+	type = lib.types.submodule (_:{
+	  options = {
+	    onCalendar = lib.mkOption {
+	      type = lib.types.nullOr lib.types.str;
+	      default = "12:00";
+	      description = "OnCalendar following systemd definitions";
+	    };
+	    onBootSec = lib.mkOption {
+	      type = lib.types.nullOr lib.types.str;
+	      default = null;
+	      description = "OnBootSec following systemd definitions";
+	    };
+	    onUnitActiveSec = lib.mkOption {
+	      type = lib.types.nullOr lib.types.str;
+	      default = null;
+	      description = "OnUnitActiveSec following systemd definitions";
+	    };
+	  };
+	});
+      };
       remote = lib.mkOption {
         default = {enable = false;};
         type = with lib.types;
@@ -45,7 +67,7 @@
                 type = lib.types.bool;
                 default = false;
                 description = "Whether or not rsync will be manage remotes";
-              };
+             };
               ipOrHostname = lib.mkOption {
                 type = lib.types.nullOr lib.types.str;
                 default = null;
