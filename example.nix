@@ -39,6 +39,7 @@
       retry.times = "12";
       retry.timeout = "20m";
       retry.infinite = false; # overrides any other option!
+      exclude = ["/path/to/abspath" "/path/to/abspath"];
     }
   ];
 }

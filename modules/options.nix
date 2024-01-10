@@ -46,13 +46,18 @@
                 default = false;
                 description = "Whether or not rsync will be manage remotes";
               };
+              ipOrHostname = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "Target remote IP or Hostname";
+              };
               user = lib.mkOption {
                 default = {};
                 type = lib.types.submodule (_: {
                   options = {
                     name = lib.mkOption {
                       type = lib.types.nullOr lib.types.str;
-		      default = null;
+                      default = null;
                       description = "Target username for the remote";
                     };
                     password = lib.mkOption {
@@ -74,11 +79,6 @@
                       type = lib.types.nullOr lib.types.path;
                       default = null;
                       description = "SSH keyfile that will be used for authentication";
-                    };
-                    ipOrHostname = lib.mkOption {
-                      type = lib.types.nullOr lib.types.str;
-                      default = null;
-                      description = "Target remote IP or Hostname";
                     };
                   };
                 });
@@ -103,5 +103,10 @@ in {
     example = lib.literalExpression ''
       [{ deploymentName = "amogus"; local.dir = /path/to/abspath; targetDir = /path/to/abspath; remote.enable = true; remote.user = "root"; remote.ipOrHostname = "192.168.1.1"}]
     '';
+  };
+  rsyncPackage = lib.mkOption {
+    type = lib.types.package;
+    default = pkgs.rsync;
+    description = "The rsync package you want to use";
   };
 }
