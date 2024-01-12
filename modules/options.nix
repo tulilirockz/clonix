@@ -20,7 +20,8 @@
             };
             exclude = lib.mkOption {
               type = lib.types.listOf lib.types.str;
-              default = ["/example/path" "/path/to/abspath"];
+              default = [];
+              example = ["/example/path" "/path/to/abspath"];
               description = "Paths to exclude";
             };
           };
@@ -28,7 +29,7 @@
       };
       targetDir = lib.mkOption {
         type = lib.types.str;
-        default = null;
+        example = "/path/to/abspath";
         description = "Path that will be used as the target directory";
       };
       extraOptions = lib.mkOption {
@@ -40,20 +41,40 @@
         default = {};
         type = lib.types.submodule (_: {
           options = {
-            onCalendar = lib.mkOption {
+            #enable = lib.mkEnableOption {
+            #  type = lib.types.bool;
+            #  default = true;
+            #  description = "Whether or not the timer is enabled.";
+            #};
+            OnCalendar = lib.mkOption {
               type = lib.types.nullOr lib.types.str;
               default = "12:00";
               description = "OnCalendar following systemd definitions";
             };
-            onBootSec = lib.mkOption {
+            OnActiveSec = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+              description = "OnActiveSec following systemd definitions";
+            };
+            OnBootSec = lib.mkOption {
               type = lib.types.nullOr lib.types.str;
               default = null;
               description = "OnBootSec following systemd definitions";
             };
-            onUnitActiveSec = lib.mkOption {
+            OnStartupSec = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+              description = "OnStartupSec following systemd definitions";
+            };
+            OnUnitActiveSec = lib.mkOption {
               type = lib.types.nullOr lib.types.str;
               default = null;
               description = "OnUnitActiveSec following systemd definitions";
+            };
+            OnUnitInactiveSec = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+              description = "OnUnitInactiveSec following systemd definitions";
             };
           };
         });

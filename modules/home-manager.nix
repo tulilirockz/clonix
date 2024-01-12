@@ -5,9 +5,10 @@
   ...
 }: let
   cfg = config.services.clonix;
+  ifNotNull = value: lib.mkIf (value != null) value;
   generateDeploymentHash = deployment: builtins.hashString "sha256" (builtins.toJSON deployment);
   generateService = deployment: {
-    "clonix@${generateDeploymentHash deployment}" = {
+    "clonix@${generateDeploymentHash deployment}-${deployment.deploymentName}" = {
       Unit = {
         Description = "Clonix for ${deployment.deploymentName}: local: ${deployment.local.dir}, target: ${deployment.targetDir}";
         Documentation = "man:clonix(1)";
@@ -20,23 +21,14 @@
     };
   };
   generateTimer = deployment: {
-    "clonix@${generateDeploymentHash deployment}" = {
+    "clonix@${generateDeploymentHash deployment}-${deployment.deploymentName}" = {
       Timer = {
-        OnBootSec = "${
-          if (deployment.timer.onBootSec != null)
-          then deployment.timer.onBootSec
-          else ""
-        }";
-        OnUnitActiveSec = "${
-          if (deployment.timer.onUnitActiveSec != null)
-          then deployment.timer.onUnitActiveSec
-          else ""
-        }";
-        OnCalendar = "${
-          if (deployment.timer.onCalendar != null)
-          then deployment.timer.onCalendar
-          else ""
-        }";
+        OnActiveSec = ifNotNull deployment.timer.OnActiveSec;
+        OnBootSec = ifNotNull deployment.timer.OnBootSec;
+        OnStartupSec = ifNotNull deployment.timer.OnStartupSec;
+        OnUnitActiveSec = ifNotNull deployment.timer.OnUnitActiveSec;
+        OnUnitInactiveSec = ifNotNull deployment.timer.OnUnitInactiveSec;
+        OnCalendar = ifNotNull deployment.timer.OnCalendar;
         Unit = "clonix@${generateDeploymentHash deployment}.service";
       };
       Install.WantedBy = ["timers.target"];
