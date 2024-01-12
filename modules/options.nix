@@ -18,11 +18,6 @@
               default = null;
               description = "Path that will be used as the local directory";
             };
-            user = lib.mkOption {
-              type = with lib.types; str;
-              default = null;
-              description = "User that will run the rsync command";
-            };
             exclude = lib.mkOption {
               type = lib.types.listOf lib.types.str;
               default = ["/example/path" "/path/to/abspath"];
@@ -92,8 +87,6 @@
                       default = null;
                       description = "Target password for the remote";
                     };
-
-                    # TODO: Implement ssh keyfile password
                     keyfile = lib.mkOption {
                       type = lib.types.nullOr lib.types.path;
                       default = null;

@@ -31,7 +31,9 @@
         else ""
       }
       ${
-        "--exclude={" + (lib.concatStringsSep "," deployment.local.exclude) + "} \\"
+        if (deployment.exclude.length > 0)
+        then "--exclude={" + (lib.concatStringsSep "," deployment.local.exclude) + "} \\"
+        else ""
       }
       ${deployment.local.dir}/* \
       ${

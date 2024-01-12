@@ -16,7 +16,7 @@
       };
 
       serviceConfig = {
-        User = deployment.local.user;
+        DynamicUser = true;
         WorkingDirectory = deployment.local.dir;
         ExecStart = "${import ./cloner-script.nix {inherit cfg pkgs lib deployment;}} ${generateDeploymentHash deployment}";
       };
