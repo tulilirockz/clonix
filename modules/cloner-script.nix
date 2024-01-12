@@ -31,7 +31,7 @@
         else ""
       }
       ${
-        if (deployment.exclude.length > 0)
+        if (deployment.local.exclude.length > 0)
         then "--exclude={" + (lib.concatStringsSep "," deployment.local.exclude) + "} \\"
         else ""
       }
