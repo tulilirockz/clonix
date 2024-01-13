@@ -16,6 +16,11 @@
 
     formatter.${system} = pkgs.alejandra;
 
+    template.default = {
+      path = ./template;
+      description = "A simple NixOS/Home-Manager configuration to get you started with Clonix";
+    };
+
     checks.${system}.default = pkgs.nixosTest {
       name = "Rsync integration test";
 
