@@ -25,7 +25,10 @@
   };
   generateTimer = deployment: {
     "clonix@${generateDeploymentHash deployment}-${deployment.deploymentName}" = {
+      enable = deployment.timer.enable;
+
       wantedBy = ["timers.target"];
+
       timerConfig = {
         OnActiveSec = ifNotNull deployment.timer.OnActiveSec;
         OnBootSec = ifNotNull deployment.timer.OnBootSec;

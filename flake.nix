@@ -67,6 +67,7 @@
               deploymentName = "testing_deployment";
               local.dir = "${nodes.sender.users.users.tester.home}/testingfiles";
               targetDir = "${nodes.reciever.users.users.tester.home}/testingfiles";
+              timer.enable = false;
               timer.OnBootSec = "1";
               remote.enable = nodes.reciever.services.openssh.enable;
               remote.ipOrHostname = (builtins.elemAt nodes.reciever.networking.interfaces.eth0.ipv4.addresses 0).address;

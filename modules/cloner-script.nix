@@ -49,7 +49,7 @@
       if [ "$1"  == "${generateDeploymentHash deployment}" ] ; then 
 
         ${generateProperRsyncCmd deployment}
-        
+      
       fi''
   );
 in

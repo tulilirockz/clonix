@@ -41,11 +41,11 @@
         default = {};
         type = lib.types.submodule (_: {
           options = {
-            #enable = lib.mkEnableOption {
-            #  type = lib.types.bool;
-            #  default = true;
-            #  description = "Whether or not the timer is enabled.";
-            #};
+            enable = lib.mkEnableOption {
+              type = lib.types.bool;
+              default = true;
+              description = "Whether or not the timer is enabled.";
+            };
             OnCalendar = lib.mkOption {
               type = lib.types.nullOr lib.types.str;
               default = "12:00";
